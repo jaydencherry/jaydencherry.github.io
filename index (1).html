@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jayden Cherry | Game Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --pink: #ff2d78;
+      --dark: #0c0c0e;
+      --off: #f5f0eb;
+      --card-bg: #141416;
+      --border: #222228;
+      --muted: #888896;
+      --display: 'Bebas Neue', sans-serif;
+      --body: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--off);
+      font-family: var(--body);
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(12,12,14,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      background: linear-gradient(90deg, var(--cyan), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--off); }
+    .nav-links .nav-cta {
+      background: var(--pink);
+      color: #fff !important;
+      padding: 0.5rem 1.2rem;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-links .nav-cta:hover {
+      background: var(--cyan);
+      color: var(--dark) !important;
+      transform: translateY(-1px);
+    }
+
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+      gap: 2rem;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--display);
+      font-size: clamp(12rem, 25vw, 22rem);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 0;
+      user-select: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-cyan { width: 400px; height: 400px; background: rgba(0,229,255,0.08); top: 10%; right: -100px; }
+    .orb-pink { width: 350px; height: 350px; background: rgba(255,45,120,0.08); bottom: 10%; left: -80px; }
+
+    .hero-left { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before { content: ''; width: 2rem; height: 2px; background: var(--cyan); }
+
+    .hero-name {
+      font-family: var(--display);
+      font-size: clamp(5rem, 10vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 2rem;
+    }
+    .hero-name .line1 { color: var(--off); display: block; }
+    .hero-name .line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #aaaabc;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-desc strong { color: var(--off); font-weight: 500; }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      font-family: var(--body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-fill {
+      background: linear-gradient(135deg, var(--cyan), var(--pink));
+      color: var(--dark);
+    }
+    .btn-fill:hover { opacity: 0.85; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--off);
+    }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    .hero-right {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      gap: 1rem; align-items: flex-end;
+    }
+
+    .hero-stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      width: 100%; max-width: 320px;
+      position: relative; overflow: hidden;
+    }
+    .hero-stat-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--pink));
+    }
+    .stat-label {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.4rem;
+    }
+    .stat-value {
+      font-family: var(--display);
+      font-size: 2.4rem; letter-spacing: 0.05em;
+      color: var(--off); line-height: 1;
+    }
+    .stat-value span { color: var(--pink); }
+
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 7rem 3rem; }
+
+    .section-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem; gap: 2rem; flex-wrap: wrap;
+    }
+    .section-num {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--pink); margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      letter-spacing: 0.03em; line-height: 1; color: var(--off);
+    }
+    .section-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--cyan), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #projects { background: var(--card-bg); }
+
+    .projects-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+
+    .project-row {
+      background: var(--card-bg);
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      align-items: start;
+      gap: 2rem; padding: 2.5rem 2rem;
+      transition: background 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .project-row::after {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(180deg, var(--cyan), var(--pink));
+      transform: scaleY(0); transform-origin: bottom;
+      transition: transform 0.3s ease;
+    }
+    .project-row:hover { background: #1a1a1e; }
+    .project-row:hover::after { transform: scaleY(1); }
+
+    .project-index {
+      font-family: var(--display); font-size: 2.5rem;
+      color: var(--border); line-height: 1; transition: color 0.2s;
+    }
+    .project-row:hover .project-index { color: var(--pink); }
+
+    .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .ptag {
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .ptag.cyan { border-color: rgba(0,229,255,0.3); color: var(--cyan); }
+    .ptag.pink { border-color: rgba(255,45,120,0.3); color: var(--pink); }
+
+    .project-name {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em; color: var(--off);
+      margin-bottom: 0.75rem; line-height: 1;
+    }
+    .project-desc {
+      font-size: 0.88rem; font-weight: 300;
+      line-height: 1.7; color: #9999aa;
+      max-width: 640px; margin-bottom: 1.25rem;
+    }
+    .project-highlights { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .highlight {
+      font-size: 0.75rem; font-weight: 500;
+      color: #aaaabc; padding: 0.3rem 0.75rem;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .project-link-wrap { padding-top: 0.5rem; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cyan); text-decoration: none;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .project-link:hover { color: var(--pink); gap: 0.75rem; }
+
+    #skills {}
+
+    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .skill-block { border: 1px solid var(--border); padding: 2.5rem; }
+    .skill-block-label {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 1.5rem;
+    }
+    .skill-block.pink-block .skill-block-label { color: var(--pink); }
+    .skill-list { display: flex; flex-direction: column; gap: 0.85rem; }
+    .skill-item {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 0.95rem; font-weight: 400; color: var(--off);
+    }
+    .skill-item::before { content: ''; width: 6px; height: 6px; background: var(--cyan); flex-shrink: 0; }
+    .skill-block.pink-block .skill-item::before { background: var(--pink); }
+
+    #experience { background: var(--card-bg); }
+
+    .exp-list { display: flex; flex-direction: column; }
+
+    .exp-item {
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 3rem; padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .exp-item:last-child { border-bottom: none; }
+
+    .exp-date-col {
+      font-size: 0.78rem; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.05em; padding-top: 0.3rem;
+    }
+    .exp-date-col .exp-co {
+      display: block; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--pink); margin-bottom: 0.4rem;
+    }
+
+    .exp-role {
+      font-family: var(--display); font-size: 2rem;
+      letter-spacing: 0.05em; color: var(--off);
+      margin-bottom: 1rem; line-height: 1;
+    }
+    .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .exp-points li {
+      font-size: 0.88rem; font-weight: 300;
+      line-height: 1.65; color: #9999aa;
+      padding-left: 1.25rem; position: relative;
+    }
+    .exp-points li::before { content: '›'; position: absolute; left: 0; color: var(--cyan); }
+
+    #education {}
+
+    .edu-block {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; border: 1px solid var(--border);
+      padding: 3rem; align-items: center;
+    }
+    .edu-school {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      letter-spacing: 0.04em; line-height: 1.1; margin-bottom: 1rem;
+    }
+    .edu-school em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--cyan), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .edu-degree { font-size: 0.9rem; font-weight: 300; color: #9999aa; line-height: 1.6; }
+    .edu-right { display: flex; flex-direction: column; gap: 1.5rem; }
+    .edu-stat { display: flex; flex-direction: column; gap: 0.3rem; }
+    .edu-stat-label {
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    }
+    .edu-stat-val { font-family: var(--display); font-size: 2rem; letter-spacing: 0.05em; color: var(--off); }
+
+    #contact { background: var(--card-bg); }
+
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .contact-tagline {
+      font-family: var(--display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      letter-spacing: 0.03em; line-height: 1.05; margin-bottom: 1.5rem;
+    }
+    .contact-tagline em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--cyan), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .contact-sub { font-size: 0.95rem; font-weight: 300; color: #9999aa; line-height: 1.7; margin-bottom: 2.5rem; }
+    .contact-right { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border);
+      text-decoration: none; color: var(--off);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .contact-row:hover { border-color: var(--cyan); background: rgba(0,229,255,0.04); }
+    .contact-row-label {
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.2rem;
+    }
+    .contact-row-val { font-size: 0.92rem; font-weight: 500; }
+    .contact-arrow { color: var(--cyan); font-size: 1.1rem; }
+
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .js-ready .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+      .hero-right { align-items: flex-start; }
+      .hero-stat-card { max-width: 100%; }
+      .section-wrap { padding: 5rem 1.5rem; }
+      .project-row { grid-template-columns: 2rem 1fr; }
+      .project-link-wrap { display: none; }
+      .skills-layout { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .edu-block { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">JC</div>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="https://www.linkedin.com/in/jayden-cherry/" target="_blank" class="nav-cta">LinkedIn ↗</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="orb orb-cyan"></div>
+    <div class="orb orb-pink"></div>
+    <div class="hero-bg-text">DESIGN</div>
+
+    <div class="hero-left">
+      <p class="hero-eyebrow">Game Designer & Developer</p>
+      <h1 class="hero-name">
+        <span class="line1">Jayden</span>
+        <span class="line2">Cherry</span>
+      </h1>
+      <p class="hero-desc">
+        Building <strong>worlds, systems, and experiences</strong> through Unity and hands-on design while studying Game Design at Michigan State University.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-fill">See My Work</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-stat-card">
+        <p class="stat-label">Current Status</p>
+        <p class="stat-value" style="font-size:1.5rem; color: var(--cyan);">MSU '27</p>
+      </div>
+      <div class="hero-stat-card">
+        <p class="stat-label">Specialization</p>
+        <p class="stat-value" style="font-size:1.3rem;">UNITY <span>C#</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-num">01 / Projects</p>
+          <h2 class="section-title">What I've <em>Built</em></h2>
+        </div>
+      </div>
+
+      <div class="projects-list reveal">
+        <div class="project-row">
+          <span class="project-index">01</span>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="ptag cyan">2025</span>
+              <span class="ptag">Unity</span>
+              <span class="ptag">Solo</span>
+              <span class="ptag pink">2D RPG</span>
+            </div>
+            <h3 class="project-name">AboveTale</h3>
+            <p class="project-desc">A fully explorable top-down RPG overworld with interactive NPC dialogue, a custom bullet-hell combat system inspired by Undertale, and original music composed and integrated from scratch.</p>
+            <div class="project-highlights">
+              <span class="highlight">NPC Dialogue System</span>
+              <span class="highlight">Bullet-Hell Combat</span>
+              <span class="highlight">Original Soundtrack</span>
+              <span class="highlight">C# Scripting</span>
+            </div>
+          </div>
+          <div class="project-link-wrap">
+            <a href="https://jaydencherry.itch.io/abovetale" target="_blank" class="project-link">Play <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="project-row">
+          <span class="project-index">02</span>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="ptag cyan">2023</span>
+              <span class="ptag">Unity</span>
+              <span class="ptag">Solo</span>
+              <span class="ptag pink">Space Shooter</span>
+            </div>
+            <h3 class="project-name">Zap Attack!</h3>
+            <p class="project-desc">A multi-level arcade space shooter with progressive difficulty scaling, an infinite enemy spawner stage, asteroid obstacle mechanics, and an original FL Studio soundtrack, shipped on itch.io in both HTML5 and Windows formats.</p>
+            <div class="project-highlights">
+              <span class="highlight">Progressive Difficulty</span>
+              <span class="highlight">Infinite Spawner</span>
+              <span class="highlight">FL Studio Music</span>
+              <span class="highlight">HTML5 + Windows</span>
+            </div>
+          </div>
+          <div class="project-link-wrap">
+            <a href="https://jaydencherry.itch.io/zapattack" target="_blank" class="project-link">Play <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="project-row">
+          <span class="project-index">03</span>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="ptag cyan">Game Jam</span>
+              <span class="ptag">Tabletop</span>
+              <span class="ptag">Collaborative</span>
+              <span class="ptag pink">Card/Board Hybrid</span>
+            </div>
+            <h3 class="project-name">Arcane Adrenaline</h3>
+            <p class="project-desc">A card/board hybrid where wizards race through the Dungeon of Doom using poker-style 3-card spell combos. Features two fully custom decks: a 52-card elemental Spell Deck (Cryo, Pyro, Geo, Electro) and a procedural Dungeon Deck with traps, bosses, and branching paths. Co-designed and illustrated 70+ unique cards with Aiden Bunnell & Quinton Mazzara.</p>
+            <div class="project-highlights">
+              <span class="highlight">70+ Cards Designed</span>
+              <span class="highlight">4 Elemental Decks</span>
+              <span class="highlight">Boss Gates</span>
+              <span class="highlight">Card Illustration</span>
+              <span class="highlight">Game Balancing</span>
+            </div>
+          </div>
+          <div class="project-link-wrap"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-num">02 / Skills</p>
+          <h2 class="section-title">My <em>Toolkit</em></h2>
+        </div>
+      </div>
+      <div class="skills-layout reveal">
+        <div class="skill-block">
+          <p class="skill-block-label">Game Design</p>
+          <div class="skill-list">
+            <div class="skill-item">Level Design</div>
+            <div class="skill-item">Systems Design</div>
+            <div class="skill-item">Gameplay Prototyping</div>
+            <div class="skill-item">UI / UX Design</div>
+            <div class="skill-item">Playtesting & Iteration</div>
+            <div class="skill-item">Game Balancing</div>
+          </div>
+        </div>
+        <div class="skill-block pink-block">
+          <p class="skill-block-label">Engines & Technical</p>
+          <div class="skill-list">
+            <div class="skill-item">Unity</div>
+            <div class="skill-item">C#</div>
+            <div class="skill-item">Unreal Engine 5</div>
+            <div class="skill-item">FL Studio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-num">03 / Experience</p>
+          <h2 class="section-title">Work <em>History</em></h2>
+        </div>
+      </div>
+      <div class="exp-list reveal">
+        <div class="exp-item">
+          <div class="exp-date-col">
+            <span class="exp-co">Gong Cha</span>
+            Madison Heights, MI<br/>
+            June 2024 – Present
+          </div>
+          <div class="exp-body">
+            <h3 class="exp-role">Shift Lead</h3>
+            <ul class="exp-points">
+              <li>Lead shift operations and supervise a team of baristas in a high-volume bubble tea environment, ensuring quality and service standards are consistently met</li>
+              <li>Train and onboard new team members, breaking down complex processes into clear, repeatable steps</li>
+              <li>Manage time-sensitive decisions under pressure, directly applicable to rapid game development cycles and jam environments</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-date-col">
+            <span class="exp-co">Fogo de Chão</span>
+            Part-time<br/>
+            Feb 2023 – Jun 2023
+          </div>
+          <div class="exp-body">
+            <h3 class="exp-role">Busser</h3>
+            <ul class="exp-points">
+              <li>Supported front-of-house operations in a high-end, fast-paced Brazilian steakhouse environment</li>
+              <li>Developed strong teamwork and communication skills while maintaining composure during peak service hours</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-num">04 / Education</p>
+          <h2 class="section-title">Academic <em>Background</em></h2>
+        </div>
+      </div>
+      <div class="edu-block reveal">
+        <div>
+          <h3 class="edu-school">Michigan <em>State</em> University</h3>
+          <p class="edu-degree">Bachelor of Arts in Media & Information<br/>Game Design Concentration</p>
+        </div>
+        <div class="edu-right">
+          <div class="edu-stat">
+            <span class="edu-stat-label">Expected Graduation</span>
+            <span class="edu-stat-val">DEC 2027</span>
+          </div>
+          <div class="edu-stat">
+            <span class="edu-stat-label">GPA</span>
+            <span class="edu-stat-val">3.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-wrap">
+      <div class="contact-layout">
+        <div class="contact-left reveal">
+          <h2 class="contact-tagline">Let's <em>Work</em> Together</h2>
+          <p class="contact-sub">Open to internships, game jam collabs, and creative opportunities. Reach out via email or connect on LinkedIn.</p>
+          <a href="/cdn-cgi/l/email-protection#185279617c7d767b707d6a6a61282e2f587f75797174367b7775" class="btn btn-fill">Send an Email</a>
+        </div>
+        <div class="contact-right reveal">
+          <a href="/cdn-cgi/l/email-protection#abe1cad2cfcec5c8c3ced9d9d29b9d9cebccc6cac2c785c8c4c6" class="contact-row">
+            <div>
+              <p class="contact-row-label">Email</p>
+              <p class="contact-row-val"><span class="__cf_email__" data-cfemail="a3e9c2dac7c6cdc0cbc6d1d1da939594e3c4cec2cacf8dc0ccce">[email&#160;protected]</span></p>
+            </div>
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="tel:5867180179" class="contact-row">
+            <div>
+              <p class="contact-row-label">Phone</p>
+              <p class="contact-row-val">586-718-0179</p>
+            </div>
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://www.linkedin.com/in/jayden-cherry/" target="_blank" class="contact-row">
+            <div>
+              <p class="contact-row-label">LinkedIn</p>
+              <p class="contact-row-val">jayden-cherry</p>
+            </div>
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://jaydencherry.itch.io" target="_blank" class="contact-row">
+            <div>
+              <p class="contact-row-label">itch.io</p>
+              <p class="contact-row-val">jaydencherry.itch.io</p>
+            </div>
+            <span class="contact-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2025 Jayden Cherry</span>
+    <span>Game Designer & Developer · MSU</span>
+  </footer>
+  <script>
+    function revealAll() {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    }
+    if ('IntersectionObserver' in window) {
+      document.body.classList.add('js-ready');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      setTimeout(revealAll, 1500);
+    } else {
+      revealAll();
+    }
+  </script>
+</body>
+</html>
